@@ -47,7 +47,7 @@ For large input files, the script can take some time to run. As of 8/2015, the f
 
 ## Output format
 
-The output is a UTF-8 text file with nine  comma-separated columns, and with a first line giving the columns names:
+The output is a UTF-8 text file with nine tab-separated columns, and with a first line giving the columns names:
 
 |     id| version|visible |    sec1970|type |     pos1|       pos2|amenity_type |name                                         |
 |------:|-------:|:-------|----------:|:----|--------:|----------:|:------------|:--------------------------------------------|

@@ -30,11 +30,15 @@ if (!filename) print_usage_and_exit();
  *  Program output
  */
 
-console.log(['id', 'version', 'visible', 'sec1970', 'type', 'pos1', 'pos2', 'amenity_type', 'name'].join(','));
+console.log(['id', 'version', 'visible', 'sec1970', 'type', 'pos1', 'pos2', 'amenity_type', 'name'].join('\t'));
+
+var escape_tabs = function(str) {
+    return str.split('\t').join('\\t');
+};
 
 // Escape newlines, remove leading/trailing spaces and enclose the string in quotes.
 var cleanup_string = function(str) {
-    return str ? ('"' + js_escape(str).trim() + '"') : '""';
+    return str ? escape_tabs(js_escape(str).trim()) : "";
 };
 
 // Return array with values for the 'pos1' and 'pos2' columns.
@@ -56,10 +60,10 @@ var output = function(map_obj) {
                      map_obj.visible,
                      map_obj.timestamp_seconds_since_epoch,
                      map_obj.type,
-                     position(map_obj).join(','),
+                     position(map_obj).join('\t'),
                      cleanup_string(amenity_type),
                      cleanup_string(node_tags['name'])];
-    console.log(out_array.join(','));
+    console.log(out_array.join('\t'));
 };
 
 /**
