@@ -41,13 +41,13 @@ There are two scripts: `extract-amenity-type` and `extract-amenities`. The first
 node extract-amenity-type.js [node|way|relation] input-osm-file
 ```
 
-Here, the first parameter (`node`, `way` or `relation`) is the type of map elements to extract. The second parameter is the OSM input file. Output is to stdout. The second script, `extract-amenities` ([extract-script](extract-script)), is just a shell script thats extracts all three types (nodes, ways and relations) of amenities. It is run as:
+Here, the first parameter (`node`, `way` or `relation`) is the type of map elements to extract. The second parameter is the OSM input file. Output is to stdout. The second script, `extract-amenities` ([extract-amenities](extract-amenities)), is just a shell script thats extracts all three types (nodes, ways and relations). It is run as:
 
 ```
 ./extract-amenities input-osm-file output-directory
 ```
 
-and output is written to files `amenities-nodes.txt`, `amenities-ways.txt` and `amenities-relations.txt` in the output directory. While running, `extract-amenities` will write some system, file and timing information to the output directory. This includes the MD5 checksum for the input file.
+The output is written to files `amenities-nodes.txt`, `amenities-ways.txt` and `amenities-relations.txt` in the output directory. While running, `extract-amenities` will write some system, file and timing information to the output directory. This includes the MD5 checksum for the input file.
 
 For large input files, the script can take some time to run. As of 8/2015, the full planet history export (as an osm.pbf -file) is 46 GB. 
 
