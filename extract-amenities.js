@@ -30,7 +30,7 @@ if (!filename) print_usage_and_exit();
  *  Program output
  */
 
-console.log(['id', 'version', 'visible', 'sec1970', 'type', 'pos1', 'pos2', 'amenity_type', 'name'].join('\t'));
+console.log(['id', 'version', 'visible', 'sec1970', 'pos1', 'pos2', 'amenity_type', 'name'].join('\t'));
 
 var escape_tabs = function(str) {
     return str.split('\t').join('\\t');
@@ -59,7 +59,6 @@ var output = function(map_obj) {
                      map_obj.version,
                      map_obj.visible,
                      map_obj.timestamp_seconds_since_epoch,
-                     map_obj.type,
                      position(map_obj).join('\t'),
                      cleanup_string(amenity_type),
                      cleanup_string(node_tags['name'])];

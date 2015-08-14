@@ -49,19 +49,18 @@ For large input files, the script can take some time to run. As of 8/2015, the f
 
 The output is a UTF-8 text file with nine tab-separated columns, and with a first line giving the columns names:
 
-|     id| version|visible |    sec1970|type |     pos1|       pos2|amenity_type |name                                         |
-|------:|-------:|:-------|----------:|:----|--------:|----------:|:------------|:--------------------------------------------|
+|     id| version|visible |    sec1970|     pos1|       pos2|amenity_type |name                                         |
+|------:|-------:|:-------|----------:|--------:|----------:|:------------|:--------------------------------------------|
 
 After that each row represents one map element (or a version of a map element):
 
 - `id`: The identifier for the element. Together with the `type`-column, these identify the element. 
 - `version`: Element version.
 - `sec1970`: Timestamp as seconds since midnight 1/1/1970.
-- `type` (`node`, `way` or `relation`): Same as the first parameter to the script.
-- `pos1`, `pos2`: The values of these columns depend on the element type:
-   - `type = node`: `pos1` and `pos2` are latitude and longitude coordinates for the node.
-   - `type = way`: The location of way elements is given by a list of nodes. For such elements, `pos1` gives the id for the first node in this list, and `pos2` is always `NA`. If the node list is empty (as for deleted elements), `pos1` is also `NA`. 
-   - `type = relation`: **Position information is not supported for relation elements.** For relation elements, `pos1` and `pos2` are both `NA`.
+- `pos1`, `pos2`: The values of these columns depend on the element type (the first parameter passed to `extract-amenities`):
+   - `node`: `pos1` and `pos2` are latitude and longitude coordinates for the node.
+   - `way`: The location of way elements is given by a list of nodes. For such elements, `pos1` gives the id for the first node in this list, and `pos2` is always `NA`. If the node list is empty (as for deleted elements), `pos1` is also `NA`. 
+   - `relation`: **Position information is not supported for relation elements.** For relation elements, `pos1` and `pos2` are both `NA`.
 - `visible` (true or false): The default is `visible=true`. To indicate that an element is deleted, one creates a revision with `visible=false`. (Note: For deleted entries, it seems that tag and position data are omitted to save space.)
 - `amenity_type`: The value for the `amenity` tag. For example, `school`.
 - `name`: The value for the `name` tag; the name of the amenity. For example, the name of a school. 
