@@ -1,6 +1,6 @@
 # Extracting amenities from OpenStreetMap data exports
 
-`extract-amenities.js` is a small script that exports all map elements tagged as amenities from an [OpenStreetMap](https://www.openstreetmap.org) data file. The script is written in Node.js/JavaScript using the [node-osmium](https://github.com/osmcode/node-osmium) library, and should therefore work with common OSM file formats. For input, it supports both snapshots and full history dumps (with element histories and deleted entries). A complete list of all amenity tags currently in use and their use numbers can be found on the OSM wiki, see [this link](http://wiki.openstreetmap.org/wiki/Key:amenity). 
+`extract-amenities` is a small script that exports all map elements tagged as amenities from an [OpenStreetMap](https://www.openstreetmap.org) data file. The script is written in Node.js/JavaScript using the [node-osmium](https://github.com/osmcode/node-osmium) library, and should therefore work with common OSM file formats. For input, it supports both snapshots and full history dumps (with element histories and deleted entries). A complete list of all amenity tags currently in use and their use numbers can be found on the OSM wiki, see [this link](http://wiki.openstreetmap.org/wiki/Key:amenity). 
 
 More specifically, the script reads an OSM input file and extracts all map elements  that has an `amenity=..` tag. If the input file contains multiple versions of the same element (as with history exports), the selection criterion is to include all versions **after** the element has been tagged as an amenity. For example, if an `amenity=water_point`-tag is added to an element in version 3, the tag changed to `amenity=drinking_water` in version 5, the tag is dropped in version 10, and the element is deleted in version 12, then the script will extract versions 3 to 12. 
 
@@ -35,19 +35,25 @@ npm install osmium-node
 
 ### Step 3. Running the script
 
-The syntax of the script is 
+There are two scripts: `extract-amenity-type` and `extract-amenities`. The first one is run as:
 
 ```
-node extract-amenities.js [node|way|relation] input-osm-file
+node extract-amenity-type.js [node|way|relation] input-osm-file
 ```
 
-The first parameter to the script (`node`, `way` or `relation`) is the type of map elements to extract. The second parameter is the OSM input file. Output is to stdout. The script [extract-script](extract-script) extracts all three element types and also saves some timing information.
+Here, the first parameter (`node`, `way` or `relation`) is the type of map elements to extract. The second parameter is the OSM input file. Output is to stdout. The second script, `extract-amenities` ([extract-script](extract-script)), is just a shell script thats extracts all three types (nodes, ways and relations) of amenities. It is run as:
+
+```
+./extract-amenities input-osm-file output-directory
+```
+
+and output is written to files `amenities-nodes.txt`, `amenities-ways.txt` and `amenities-relations.txt` in the output directory. While running, `extract-amenities` will write some system, file and timing information to the output directory. This includes the MD5 checksum for the input file.
 
 For large input files, the script can take some time to run. As of 8/2015, the full planet history export (as an osm.pbf -file) is 46 GB. 
 
 ## Output format
 
-The output is a UTF-8 text file with nine tab-separated columns, and with a first line giving the columns names:
+The output of `extract-amenity-type.js` is a UTF-8 text file with eight tab-separated columns, and with a first line giving the columns names:
 
 |     id| version|visible |    sec1970|     pos1|       pos2|amenity_type |name                                         |
 |------:|-------:|:-------|----------:|--------:|----------:|:------------|:--------------------------------------------|

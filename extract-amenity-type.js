@@ -7,7 +7,7 @@ var js_escape = require('js-string-escape')
  */
 
 var print_usage_and_exit = function() {
-    console.log('Usage: node extract-amenities.js [node|way|relation] <osm input-filename>');
+    console.log('Usage: node extract-amenity-type.js [node|way|relation] <osm input-filename>');
     process.exit();
 };
 

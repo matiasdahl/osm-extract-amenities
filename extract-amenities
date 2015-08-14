@@ -1,0 +1,49 @@
+#!/bin/bash
+
+#
+# Typically run this script as:
+#
+#  nohup ./extract-amenities osm-input-file ~/output-dir/ &
+#
+
+#
+#  Determine input file and output directory 
+#
+IN_FILE=$1
+OUT_DIR=$2
+
+if [ ! "${IN_FILE}" ] || [ ! "${OUT_DIR}" ]
+then
+   echo "Usage: ./extract-amenities osm-input-file output-directory"
+   exit 1
+fi
+
+# exit if any error
+trap 'exit' ERR
+
+#
+#  Store system and file characteristics
+#  
+
+### Note: lshw run as root ###
+sudo lshw > ${OUT_DIR}run-system-info
+
+stat --printf "Filename: %n\nFile size: %s\n MD5: \n" $IN_FILE > ${OUT_DIR}run-file-info
+touch ${OUT_DIR}run-timing-start-md5
+md5sum $IN_FILE >> ${OUT_DIR}run-file-info
+
+#
+#  Extract amenities for nodes, ways and relations.
+#
+touch ${OUT_DIR}run-timing-start-nodes
+node extract-amenity-type.js node $IN_FILE > ${OUT_DIR}amenities-nodes.txt
+
+touch ${OUT_DIR}run-timing-start-ways
+node extract-amenity-type.js way $IN_FILE > ${OUT_DIR}amenities-ways.txt
+
+touch ${OUT_DIR}run-timing-start-relations
+node extract-amenity-type.js relation $IN_FILE > ${OUT_DIR}amenities-relations.txt
+
+touch ${OUT_DIR}run-timing-script-done
+
+##
