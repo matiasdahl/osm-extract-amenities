@@ -69,13 +69,31 @@ After that each row represents one map element (or a version of a map element):
    - `relation`: **Position information is not supported for relation elements.** For relation elements, `pos1` and `pos2` are both `NA`.
 - `visible` (true or false): The default is `visible=true`. To indicate that an element is deleted, one creates a revision with `visible=false`. (Note: For deleted entries, it seems that tag and position data are omitted to save space.)
 - `amenity_type`: The value for the `amenity` tag. For example, `school`.
-- `name`: The value for the `name` tag; the name of the amenity. For example, the name of a school. 
+- `name`: The value for the `name` tag; the name of the amenity. For example, the name of a school. In the last two columns, special characters like carriage return, newline, tab and backslash are escaped as `\r`, `\n`, `\t` and `\\`. See the source code for details.
 
-These columns do not represent all data stored for an element in the input file. Amenities typically have a number of tags that describe different properties of the amenity. For example, a school might have an `contact`-tag with contact information. These are omitted. 
+The above columns do not represent all data stored for a map element in OSM data files. Amenities typically have a number of tags that describe different properties of the amenity. For example, a school might have an `contact`-tag with contact information. These are omitted. 
 
 **Note.** When working with OSM data, it is occasionally helpful to look up individual map elements. This can be done with the OSM web page. For example, [openstreetmap.org/node/123456789](http://www.openstreetmap.org/node/123456789) opens the map element of `type=node` and `id=123456789`. From this link one can also access XML exports and old versions of the node. Similar URLs also work for `way` and `relation` elements. Note that node 123, way 123 and relation 123 are not related even if they have the same `id`. It is, however, possible that two different ways refer to the same node in their id-lists, see for example [openstreetmap.org/node/3667617851](http://www.openstreetmap.org/node/3667617851). 
 
 For general documentation regarding how map elements are represented, see the [OSM wiki](http://wiki.openstreetmap.org/wiki/Elements). The node-osmium [tutorial](https://github.com/osmcode/node-osmium/blob/master/doc/tutorial.md) is also helpful.
+
+##Loading data into R
+
+The below code shows how the exported amenity data can be loaded into R. The `sed` command replaces any control characters `\n`, `\r` and `\t` with spaces. 
+
+```
+fname <- input file, e.g. amenities-nodes.txt
+Sys.setlocale(locale = "UTF-8")
+reg_exp <- "'s/\\\\t/ /g;s/\\\\n/ /g;s/\\\\r/ /g'"
+df <- read.csv(pipe(paste0("cat ", fname, " | sed -e ", reg_exp)),
+               header = TRUE,
+               sep = "\t",
+               quote = "",
+               # keep all columns as characters. 
+               colClasses = 'character',
+               allowEscapes = TRUE)
+```
+
 
 ##Performance
 
