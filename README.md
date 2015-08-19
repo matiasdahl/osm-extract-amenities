@@ -77,6 +77,19 @@ These columns do not represent all data stored for an element in the input file.
 
 For general documentation regarding how map elements are represented, see the [OSM wiki](http://wiki.openstreetmap.org/wiki/Elements). The node-osmium [tutorial](https://github.com/osmcode/node-osmium/blob/master/doc/tutorial.md) is also helpful.
 
+##Speed
+
+Running the script (which is written using the `node-osmium` library) does not need a lot of memory. Essentially, the script loops over all map elements and writes amenities to disk. It is therefore possible to process big OSM files using only basic hardware. Some runtimes for `extract-amenities` are:
+
+- full planet with old version data (8/2015):
+   - 45 GB osm.pbf file (9 hours)
+   - 67 GB osm.bz2 file (62 hours)
+
+These processing times are for a 1 core Intel Xeon CPU E5-2660 0 at 2.2 GHz with 3.5 GB memory. As the list shows, runtimes are much faster on pbf input. 
+
+Note that the `extract-amenities`-script is not optimized for speed. For example, to extract all amenities, the input file is processed three times: one time for nodes, one time for ways and one time for relations. With one core, this is not optimal. The script neither uses the optimization options available in `node-osmium`. If processing time is critical, one might also consider a different library. For a comparison of different pbf parsers (from 1/2015) can be found [here](https://github.com/pelias/pbf-parser-comparison). In this comparison, [go-osmpbf](https://github.com/qedus/osmpbf) was approximately twice as fast as `node-osmium`. 
+
+
 ## License
 
 This work is copyright 2015, Matias Dahl and released under the MIT license, see the [LICENSE](LICENSE.md)-file 
