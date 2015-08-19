@@ -77,10 +77,13 @@ These columns do not represent all data stored for an element in the input file.
 
 For general documentation regarding how map elements are represented, see the [OSM wiki](http://wiki.openstreetmap.org/wiki/Elements). The node-osmium [tutorial](https://github.com/osmcode/node-osmium/blob/master/doc/tutorial.md) is also helpful.
 
-##Speed
+##Performance
 
 Running the script (which is written using the `node-osmium` library) does not need a lot of memory. Essentially, the script loops over all map elements and writes amenities to disk. It is therefore possible to process big OSM files using only basic hardware. Some runtimes for `extract-amenities` are:
 
+- snapshot of Great Britain (8/2015):
+   - 0.7 GB osm.pbf file (7 minutes)
+   - 1.2 GB osm.bz2 file (40 minutes)
 - full planet with old version data (8/2015):
    - 45 GB osm.pbf file (9 hours)
    - 67 GB osm.bz2 file (62 hours)
