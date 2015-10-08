@@ -8,12 +8,12 @@ var js_escape = require('js-string-escape')
 
 var print_usage_and_exit = function() {
     console.log('Usage: node extract-amenity-type.js [node|way|relation] <osm input-filename>');
-    process.exit();
+    process.exit(1);
 };
 
 var fatal_abort = function() {
     console.log('Internal consistency error. Element handler does not receive map elements in sorted order.');
-    process.exit();
+    process.exit(1);
 };
 
 /**
