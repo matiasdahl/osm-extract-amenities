@@ -1,6 +1,6 @@
 # Extracting amenities from OpenStreetMap data exports
 
-`extract-amenities` is a small script that exports all map elements tagged as amenities from an [OpenStreetMap](https://www.openstreetmap.org) data file. The script is written in Node.js/JavaScript using the [node-osmium](https://github.com/osmcode/node-osmium) library, and should therefore work with common OSM file formats. For input, it supports both snapshots and full history dumps (with element histories and deleted entries). A complete list of all amenity tags currently in use and their use numbers can be found on the OSM wiki, see [this link](http://wiki.openstreetmap.org/wiki/Key:amenity). 
+`extract-amenities` is a small script that exports all map elements tagged as amenities from an [OpenStreetMap](https://www.openstreetmap.org) data file. The script is written in Node.js/JavaScript using the [node-osmium](https://github.com/osmcode/node-osmium) library, and should therefore work with common OSM file formats. For input, it supports both snapshots and full history dumps (with element histories and deleted entries). A complete list of all amenity tags currently in use and their use numbers can be found on the OSM wiki, see [this link](https://wiki.openstreetmap.org/wiki/Key:amenity). 
 
 More specifically, the script reads an OSM input file and extracts all map elements  that has an `amenity=..` tag. If the input file contains multiple versions of the same element (as with history exports), the selection criterion is to include all versions **after** the element has been tagged as an amenity. For example, if an `amenity=water_point`-tag is added to an element in version 3, the tag changed to `amenity=drinking_water` in version 5, the tag is dropped in version 10, and the element is deleted in version 12, then the script will extract versions 3 to 12. 
 
@@ -11,8 +11,8 @@ A motivation for extracting this information is to analyze amenity tags and thei
 ### Step 1. Download a data export
 
 - Some OSM data export sources are:
-   - [Export of whole planet](http://planet.openstreetmap.org/planet/full-history/): Full history with old versions and deleted elements. From the link one can also find smaller regional exports with full version history. 
-   - [Latest snapshot](http://wiki.openstreetmap.org/wiki/Planet.osm): The link also gives mirrors with regional snapshots.
+   - [Export of whole planet](https://planet.openstreetmap.org/planet/full-history/): Full history with old versions and deleted elements. From the link one can also find smaller regional exports with full version history. 
+   - [Latest snapshot](https://wiki.openstreetmap.org/wiki/Planet.osm): The link also gives mirrors with regional snapshots.
 
 OSM data files can be very large. For downloading such files, the following `wget` command is  useful:
 
@@ -77,9 +77,9 @@ The above columns do not represent all data stored for a map element in OSM data
 
 The 10/2015 snapshop (30G) contains around 3 million way amenities. On this input, `export-way-coordinates` runs in around 2 hours (Intel(R) Xeon(R) CPU E5-2660 0 @ 2.2GHz, 3.5G ram).
 
-**Note.** When working with OSM data, it is occasionally helpful to look up individual map elements. This can be done with the OSM web page. For example, [openstreetmap.org/node/123456789](http://www.openstreetmap.org/node/123456789) opens the map element of `type=node` and `id=123456789`. From this link one can also access XML exports and old versions of the node. Similar URLs also work for `way` and `relation` elements. Note that node 123, way 123 and relation 123 are not related even if they have the same `id`. It is, however, possible that two different ways refer to the same node in their id-lists, see for example [openstreetmap.org/node/3667617851](http://www.openstreetmap.org/node/3667617851). 
+**Note.** When working with OSM data, it is occasionally helpful to look up individual map elements. This can be done with the OSM web page. For example, [openstreetmap.org/node/123456789](https://www.openstreetmap.org/node/123456789) opens the map element of `type=node` and `id=123456789`. From this link one can also access XML exports and old versions of the node. Similar URLs also work for `way` and `relation` elements. Note that node 123, way 123 and relation 123 are not related even if they have the same `id`. It is, however, possible that two different ways refer to the same node in their id-lists, see for example [openstreetmap.org/node/3667617851](https://www.openstreetmap.org/node/3667617851). 
 
-For general documentation regarding how map elements are represented, see the [OSM wiki](http://wiki.openstreetmap.org/wiki/Elements). The node-osmium [tutorial](https://github.com/osmcode/node-osmium/blob/master/doc/tutorial.md) is also helpful.
+For general documentation regarding how map elements are represented, see the [OSM wiki](https://wiki.openstreetmap.org/wiki/Elements). The node-osmium [tutorial](https://github.com/osmcode/node-osmium/blob/master/doc/tutorial.md) is also helpful.
 
 ##Loading data into R
 
@@ -119,4 +119,4 @@ Note that the `extract-amenities`-script is not optimized for speed. For example
 
 This work is copyright 2015, Matias Dahl and released under the MIT license, see the [LICENSE](LICENSE.md)-file 
 
-The OpenStreetMap map is © OpenStreetMap contributors. For the full licensing terms, see [here](http://www.openstreetmap.org/copyright). 
+The OpenStreetMap map is © OpenStreetMap contributors. For the full licensing terms, see [here](https://www.openstreetmap.org/copyright). 
